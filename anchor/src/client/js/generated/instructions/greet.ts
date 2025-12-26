@@ -25,7 +25,7 @@ import {
   type InstructionWithData,
   type ReadonlyUint8Array,
 } from 'gill';
-import { VOTINGDAPP_PROGRAM_ADDRESS } from '../programs';
+import { VOTING_PROGRAM_ADDRESS } from '../programs';
 
 export const GREET_DISCRIMINATOR = new Uint8Array([
   203, 194, 3, 150, 228, 58, 181, 62,
@@ -36,7 +36,7 @@ export function getGreetDiscriminatorBytes() {
 }
 
 export type GreetInstruction<
-  TProgram extends string = typeof VOTINGDAPP_PROGRAM_ADDRESS,
+  TProgram extends string = typeof VOTING_PROGRAM_ADDRESS,
   TRemainingAccounts extends readonly AccountMeta<string>[] = [],
 > = Instruction<TProgram> &
   InstructionWithData<ReadonlyUint8Array> &
@@ -44,7 +44,7 @@ export type GreetInstruction<
 
 export type GreetInstructionData = { discriminator: ReadonlyUint8Array };
 
-export type GreetInstructionDataArgs = {};
+export type GreetInstructionDataArgs = object;
 
 export function getGreetInstructionDataEncoder(): FixedSizeEncoder<GreetInstructionDataArgs> {
   return transformEncoder(
@@ -69,15 +69,15 @@ export function getGreetInstructionDataCodec(): FixedSizeCodec<
   );
 }
 
-export type GreetInput = {};
+export type GreetInput = object;
 
 export function getGreetInstruction<
-  TProgramAddress extends Address = typeof VOTINGDAPP_PROGRAM_ADDRESS,
+  TProgramAddress extends Address = typeof VOTING_PROGRAM_ADDRESS,
 >(config?: {
   programAddress?: TProgramAddress;
 }): GreetInstruction<TProgramAddress> {
   // Program address.
-  const programAddress = config?.programAddress ?? VOTINGDAPP_PROGRAM_ADDRESS;
+  const programAddress = config?.programAddress ?? VOTING_PROGRAM_ADDRESS;
 
   const instruction = {
     programAddress,
@@ -88,7 +88,7 @@ export function getGreetInstruction<
 }
 
 export type ParsedGreetInstruction<
-  TProgram extends string = typeof VOTINGDAPP_PROGRAM_ADDRESS,
+  TProgram extends string = typeof VOTING_PROGRAM_ADDRESS,
 > = {
   programAddress: Address<TProgram>;
   data: GreetInstructionData;
