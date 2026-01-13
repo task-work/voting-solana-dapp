@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/voting.json`.
  */
 export type Voting = {
-  "address": "JAVuBXeBZqXNtS73azhBDAoYaaAFfo4gWXoZe2e7Jf8H",
+  "address": "9tXQHgJbzREGBx7FGRBiiY87F2qxBGJabWZ5Zn4wQa94",
   "metadata": {
     "name": "voting",
     "version": "0.1.0",
@@ -33,15 +33,7 @@ export type Voting = {
         },
         {
           "name": "poll",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "arg",
-                "path": "pollId"
-              }
-            ]
-          }
+          "writable": true
         },
         {
           "name": "candidate",
@@ -102,6 +94,15 @@ export type Voting = {
           "pda": {
             "seeds": [
               {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  108,
+                  108
+                ]
+              },
+              {
                 "kind": "arg",
                 "path": "pollId"
               }
@@ -147,12 +148,22 @@ export type Voting = {
       "accounts": [
         {
           "name": "signer",
+          "writable": true,
           "signer": true
         },
         {
           "name": "poll",
           "pda": {
             "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  108,
+                  108
+                ]
+              },
               {
                 "kind": "arg",
                 "path": "pollId"
@@ -219,6 +230,18 @@ export type Voting = {
         153,
         111
       ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "votingNotStarted",
+      "msg": "Voting has not started yet"
+    },
+    {
+      "code": 6001,
+      "name": "votingEnded",
+      "msg": "Voting has ended"
     }
   ],
   "types": [

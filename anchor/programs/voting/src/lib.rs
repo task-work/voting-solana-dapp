@@ -1,6 +1,6 @@
-use anchor_lang::prelude::{borsh::de, *};
+use anchor_lang::prelude::*;
 
-declare_id!("JAVuBXeBZqXNtS73azhBDAoYaaAFfo4gWXoZe2e7Jf8H");
+declare_id!("9tXQHgJbzREGBx7FGRBiiY87F2qxBGJabWZ5Zn4wQa94");
 
 #[program]
 pub mod voting {
@@ -36,12 +36,23 @@ pub mod voting {
             poll.candidate_amount += 1;                                         //候选人数量+1
             candidate.candidate_name = _candidate_name;
             candidate.candidate_votes = 0;
-
+            msg!("candidate: {}", candidate.candidate_name);
         Ok(())
     }
     pub fn vote(_ctx: Context<Vote>, _candidate_name: String, _poll_id: u64) -> Result<()> {
         let candidate = &mut _ctx.accounts.candidate;
+        let current_time = Clock::get()?.unix_timestamp;
+
+        if current_time > (_ctx.accounts.poll.poll_end as i64) {
+            return Err(ErrorCode::VotingEnded.into());
+        }
+
+        if current_time <= (_ctx.accounts.poll.poll_start as i64) {
+            return Err(ErrorCode::VotingNotStarted.into());
+        }
+
         candidate.candidate_votes += 1;                                         //候选人得票数+1
+        msg!("candidate votes: {}, {}", candidate.candidate_name, candidate.candidate_votes);
         Ok(())
     }
 }
@@ -49,10 +60,11 @@ pub mod voting {
 #[derive(Accounts)]
 #[instruction(candidate_name: String, poll_id: u64)]                    //传入的参数  
 pub struct Vote<'info> {
+    #[account(mut)]
     pub signer: Signer<'info>,                                          // 签名者账户(做投票动作的用户)
 
     #[account(                                                          
-        seeds = [poll_id.to_le_bytes().as_ref()],
+        seeds = [b"poll".as_ref(), poll_id.to_le_bytes().as_ref()],
         bump
     )]
     pub poll: Account<'info, Poll>,                                     // 投票话题的PDA账户（在创建话题成功时已存在）                
@@ -73,12 +85,8 @@ pub struct InitializeCandidate<'info> {
     #[account(mut)]
     pub signer: Signer<'info>,                                          // 签名者账户(为创建候选人的PDA地址, 签名的账户)
     
-    #[account(
-        mut,                                                            // 该账户要是可变的，候选人数量才会增加, 所以要加 mut 参数
-        seeds = [poll_id.to_le_bytes().as_ref()],                       // 投票话题的PDA账户（在创建话题成功时已存在）
-        bump
-    )]
-    pub poll: Account<'info, Poll>,            
+    #[account(mut)]
+    pub poll: Account<'info, Poll>,                                     // 该账户要是可变的，候选人数量才会增加, 所以要加 mut 参数
 
     #[account(
         init,
@@ -98,10 +106,10 @@ pub struct InitializePoll<'info> {
     #[account(mut)]
     pub signer: Signer<'info>,                                          // 签名者账户(为创建投票话题（某个投票的）PDA地址, 签名的账户)
     #[account(
-        init,
+        init_if_needed,
         payer = signer,
         space = 8 + Poll::INIT_SPACE,
-        seeds = [poll_id.to_le_bytes().as_ref()],    // PDA地址的种子
+        seeds = [b"poll".as_ref(), poll_id.to_le_bytes().as_ref()],    // PDA地址的种子
         bump,
     )]
     pub poll: Account<'info, Poll>,             // 创建后的投票话题账户(PDA地址),以上的宏，是对该账户的基本定义，如指定了创建这个账户的手续费支付者,保存数据的空间大小
@@ -128,6 +136,14 @@ pub struct Candidate {
     #[max_len(100)]
     pub candidate_name: String,                             // 候选人名称
     pub candidate_votes: u64,                               // 得票数
+}
+
+#[error_code]
+pub enum ErrorCode {
+    #[msg("Voting has not started yet")]
+    VotingNotStarted,
+    #[msg("Voting has ended")]
+    VotingEnded,
 }
 
 
