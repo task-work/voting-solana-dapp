@@ -106,6 +106,7 @@ export async function POST(request: Request) {
             }
         });
 
+        console.log("transation result: ", response);
         return Response.json(response, {headers: ACTIONS_CORS_HEADERS});
     }
     catch (e) {
