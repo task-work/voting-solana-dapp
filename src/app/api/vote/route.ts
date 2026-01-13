@@ -46,51 +46,63 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-    debugger
-    const url = new URL(request.url);
-    const candidate = url.searchParams.get("candidate");
-
-    if(candidate != 'Crunchy' && candidate != 'Smooth') {
-        return new Response("Invalid candidate", {status: 400, headers: ACTIONS_CORS_HEADERS});
-    }
-
-    // const connection = new Connection("http://localhost:8899", "confirmed");
-    // const program: Program<Voting> = new Program(IDL, {connection});
-
-    const connection = new Connection("https://api.devnet.solana.com", "confirmed");
-    const program: Program<Voting> = new Program(IDL, {connection});
-
-    debugger
-
-    const body: ActionPostRequest = await request.json();
-    let voter;
-
     try {
-        voter = new PublicKey(body.account);
-    } catch(error) {
-        return new Response(`Invalid account: ${error}`, {status: 400, headers: ACTIONS_CORS_HEADERS});
-    }
+        const url = new URL(request.url);
+        const candidate = url.searchParams.get("candidate");
 
-    const instruction = await program.methods
-    .vote(candidate, new BN(1))
-    .accounts({
-        signer: voter
-    })
-    .instruction();
-
-    const blockHash = await connection.getLatestBlockhash();
-    const transaction = new Transaction({
-        feePayer: voter,
-        blockhash: blockHash.blockhash,
-        lastValidBlockHeight: blockHash.lastValidBlockHeight
-    }).add(instruction);
-
-    const response = await createPostResponse({
-        fields: {
-            type: "transaction",
-            transaction: transaction
+        if(candidate != 'Crunchy' && candidate != 'Smooth') {
+            return new Response("Invalid candidate", {status: 400, headers: ACTIONS_CORS_HEADERS});
         }
-    });
 
-    return Response.json(response, {headers: ACTIONS_CORS_HEADERS});
+        // const connection = new Connection("http://localhost:8899", "confirmed");
+        // const program: Program<Voting> = new Program(IDL, {connection});
+
+        const connection = new Connection("https://api.devnet.solana.com", "confirmed");
+        const provider = new AnchorProvider(
+            connection,
+            {} as any,          // Action 后端不签名
+            { commitment: 'confirmed' }
+        );
+
+        const program: Program<Voting> = new Program(IDL, provider);
+
+        const body: ActionPostRequest = await request.json();
+        let voter;
+
+        try {
+            voter = new PublicKey(body.account);
+        } catch(error) {
+            return new Response(`Invalid account: ${error}`, {status: 400, headers: ACTIONS_CORS_HEADERS});
+        }
+
+        const instruction = await program.methods
+        .vote(candidate, new BN(1))
+        .accounts({
+            signer: voter
+        })
+        .instruction();
+
+        const blockHash = await connection.getLatestBlockhash();
+        const transaction = new Transaction({
+            feePayer: voter,
+            blockhash: blockHash.blockhash,
+            lastValidBlockHeight: blockHash.lastValidBlockHeight
+        }).add(instruction);
+
+        const response = await createPostResponse({
+            fields: {
+                type: "transaction",
+                transaction: transaction
+            }
+        });
+
+        return Response.json(response, {headers: ACTIONS_CORS_HEADERS});
+    }
+    catch (e) {
+        console.error('[vote action error]', e);
+        return new Response(
+            JSON.stringify({ error: String(e) }),
+            { status: 500, headers: ACTIONS_CORS_HEADERS }
+        );
+    }
 }

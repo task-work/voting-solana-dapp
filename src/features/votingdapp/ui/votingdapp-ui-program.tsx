@@ -16,7 +16,7 @@ export function VotingdappUiProgram() {
     )
   }
   return (
-    <div className={'space-y-6'}>
+    <div className={'space-y-6 text-red-500'}>
       <pre>{JSON.stringify(query.data.value.data, null, 2)}</pre>
     </div>
   )
