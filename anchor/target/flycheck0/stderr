@@ -1,12 +1,76 @@
-   0.290189833s  INFO prepare_target{force=false package_id=voting v0.1.0 (/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/programs/voting) target="voting"}: cargo::core::compiler::fingerprint: stale: changed "/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/programs/voting/src/lib.rs"
-   0.290436833s  INFO prepare_target{force=false package_id=voting v0.1.0 (/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/programs/voting) target="voting"}: cargo::core::compiler::fingerprint:           (vs) "/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/target/debug/.fingerprint/voting-e3f89de3eb0b7751/dep-lib-voting"
-   0.290439833s  INFO prepare_target{force=false package_id=voting v0.1.0 (/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/programs/voting) target="voting"}: cargo::core::compiler::fingerprint:                FileTime { seconds: 1766739930, nanos: 625813995 } < FileTime { seconds: 1766740051, nanos: 945745008 }
-   0.291049917s  INFO prepare_target{force=false package_id=voting v0.1.0 (/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/programs/voting) target="voting"}: cargo::core::compiler::fingerprint: fingerprint dirty for voting v0.1.0 (/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/programs/voting)/Check { test: false }/TargetInner { ..: lib_target("voting", ["cdylib", "lib"], "/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/programs/voting/src/lib.rs", Edition2021) }
-   0.291070167s  INFO prepare_target{force=false package_id=voting v0.1.0 (/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/programs/voting) target="voting"}: cargo::core::compiler::fingerprint:     dirty: FsStatusOutdated(StaleItem(ChangedFile { reference: "/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/target/debug/.fingerprint/voting-e3f89de3eb0b7751/dep-lib-voting", reference_mtime: FileTime { seconds: 1766739930, nanos: 625813995 }, stale: "/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/programs/voting/src/lib.rs", stale_mtime: FileTime { seconds: 1766740051, nanos: 945745008 } }))
-   0.326403833s  INFO prepare_target{force=false package_id=voting v0.1.0 (/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/programs/voting) target="voting"}: cargo::core::compiler::fingerprint: stale: changed "/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/programs/voting/src/lib.rs"
-   0.326412542s  INFO prepare_target{force=false package_id=voting v0.1.0 (/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/programs/voting) target="voting"}: cargo::core::compiler::fingerprint:           (vs) "/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/target/debug/.fingerprint/voting-cb4b9b45a9a97144/dep-test-lib-voting"
-   0.326414417s  INFO prepare_target{force=false package_id=voting v0.1.0 (/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/programs/voting) target="voting"}: cargo::core::compiler::fingerprint:                FileTime { seconds: 1766739930, nanos: 625808370 } < FileTime { seconds: 1766740051, nanos: 945745008 }
-   0.326919250s  INFO prepare_target{force=false package_id=voting v0.1.0 (/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/programs/voting) target="voting"}: cargo::core::compiler::fingerprint: fingerprint dirty for voting v0.1.0 (/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/programs/voting)/Check { test: true }/TargetInner { ..: lib_target("voting", ["cdylib", "lib"], "/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/programs/voting/src/lib.rs", Edition2021) }
-   0.326927500s  INFO prepare_target{force=false package_id=voting v0.1.0 (/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/programs/voting) target="voting"}: cargo::core::compiler::fingerprint:     dirty: FsStatusOutdated(StaleItem(ChangedFile { reference: "/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/target/debug/.fingerprint/voting-cb4b9b45a9a97144/dep-test-lib-voting", reference_mtime: FileTime { seconds: 1766739930, nanos: 625808370 }, stale: "/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/programs/voting/src/lib.rs", stale_mtime: FileTime { seconds: 1766740051, nanos: 945745008 } }))
+   0.125820625s  INFO prepare_target{force=false package_id=voting v0.1.0 (/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/programs/voting) target="voting"}: cargo::core::compiler::fingerprint: fingerprint error for voting v0.1.0 (/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/programs/voting)/Check { test: false }/TargetInner { ..: lib_target("voting", ["cdylib", "lib"], "/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/programs/voting/src/lib.rs", Edition2021) }
+   0.125975375s  INFO prepare_target{force=false package_id=voting v0.1.0 (/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/programs/voting) target="voting"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/target/debug/.fingerprint/voting-e3f89de3eb0b7751/lib-voting`
+
+Caused by:
+    No such file or directory (os error 2)
+
+Stack backtrace:
+   0: std::backtrace::Backtrace::create
+   1: cargo_util::paths::read_bytes
+   2: cargo_util::paths::read
+   3: cargo::core::compiler::fingerprint::_compare_old_fingerprint
+   4: cargo::core::compiler::fingerprint::prepare_target
+   5: cargo::core::compiler::compile
+   6: <cargo::core::compiler::build_runner::BuildRunner>::compile
+   7: cargo::ops::cargo_compile::compile_ws
+   8: cargo::ops::cargo_compile::compile_with_exec
+   9: cargo::ops::cargo_compile::compile
+  10: cargo::commands::check::exec
+  11: <cargo::cli::Exec>::exec
+  12: cargo::main
+  13: std::sys::backtrace::__rust_begin_short_backtrace::<fn(), ()>
+  14: std::rt::lang_start::<()>::{closure#0}
+  15: std::rt::lang_start_internal
+  16: _main
+   0.140120375s  INFO prepare_target{force=false package_id=anchor-lang v0.31.1 target="anchor_lang"}: cargo::core::compiler::fingerprint: fingerprint error for anchor-lang v0.31.1/Check { test: false }/TargetInner { ..: lib_target("anchor_lang", ["lib"], "/Users/garysen/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/anchor-lang-0.31.1/src/lib.rs", Edition2021) }
+   0.140128667s  INFO prepare_target{force=false package_id=anchor-lang v0.31.1 target="anchor_lang"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/target/debug/.fingerprint/anchor-lang-3a1a33a756caf6bd/lib-anchor_lang`
+
+Caused by:
+    No such file or directory (os error 2)
+
+Stack backtrace:
+   0: std::backtrace::Backtrace::create
+   1: cargo_util::paths::read_bytes
+   2: cargo_util::paths::read
+   3: cargo::core::compiler::fingerprint::_compare_old_fingerprint
+   4: cargo::core::compiler::fingerprint::prepare_target
+   5: cargo::core::compiler::compile
+   6: cargo::core::compiler::compile
+   7: <cargo::core::compiler::build_runner::BuildRunner>::compile
+   8: cargo::ops::cargo_compile::compile_ws
+   9: cargo::ops::cargo_compile::compile_with_exec
+  10: cargo::ops::cargo_compile::compile
+  11: cargo::commands::check::exec
+  12: <cargo::cli::Exec>::exec
+  13: cargo::main
+  14: std::sys::backtrace::__rust_begin_short_backtrace::<fn(), ()>
+  15: std::rt::lang_start::<()>::{closure#0}
+  16: std::rt::lang_start_internal
+  17: _main
+   0.170962709s  INFO prepare_target{force=false package_id=voting v0.1.0 (/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/programs/voting) target="voting"}: cargo::core::compiler::fingerprint: fingerprint error for voting v0.1.0 (/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/programs/voting)/Check { test: true }/TargetInner { ..: lib_target("voting", ["cdylib", "lib"], "/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/programs/voting/src/lib.rs", Edition2021) }
+   0.170977792s  INFO prepare_target{force=false package_id=voting v0.1.0 (/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/programs/voting) target="voting"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/target/debug/.fingerprint/voting-cb4b9b45a9a97144/test-lib-voting`
+
+Caused by:
+    No such file or directory (os error 2)
+
+Stack backtrace:
+   0: std::backtrace::Backtrace::create
+   1: cargo_util::paths::read_bytes
+   2: cargo_util::paths::read
+   3: cargo::core::compiler::fingerprint::_compare_old_fingerprint
+   4: cargo::core::compiler::fingerprint::prepare_target
+   5: cargo::core::compiler::compile
+   6: <cargo::core::compiler::build_runner::BuildRunner>::compile
+   7: cargo::ops::cargo_compile::compile_ws
+   8: cargo::ops::cargo_compile::compile_with_exec
+   9: cargo::ops::cargo_compile::compile
+  10: cargo::commands::check::exec
+  11: <cargo::cli::Exec>::exec
+  12: cargo::main
+  13: std::sys::backtrace::__rust_begin_short_backtrace::<fn(), ()>
+  14: std::rt::lang_start::<()>::{closure#0}
+  15: std::rt::lang_start_internal
+  16: _main
+    Checking anchor-lang v0.31.1
     Checking voting v0.1.0 (/Users/garysen/work/study/chain-block/solana/voting-dapp/anchor/programs/voting)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.84s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.00s
