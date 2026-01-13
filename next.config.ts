@@ -2,7 +2,7 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  allowedDevOrigins: ['10.0.0.128'],
+  allowedDevOrigins: ['10.0.0.128', 'api.devnet.solana.com'],
 }
 
 export default nextConfig;
