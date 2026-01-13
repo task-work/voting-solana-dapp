@@ -16,7 +16,7 @@ import {
 import { type ParsedGreetInstruction } from '../instructions';
 
 export const VOTING_PROGRAM_ADDRESS =
-  'JAVuBXeBZqXNtS73azhBDAoYaaAFfo4gWXoZe2e7Jf8H' as Address<'JAVuBXeBZqXNtS73azhBDAoYaaAFfo4gWXoZe2e7Jf8H'>;
+  'GuCG6usWLQ5JwCMwyJj5LtAD2uLAtko4vRakmaUKTGky' as Address<'GuCG6usWLQ5JwCMwyJj5LtAD2uLAtko4vRakmaUKTGky'>;
 
 export enum VotingdappInstruction {
   Greet,
@@ -43,7 +43,7 @@ export function identifyVotingdappInstruction(
 }
 
 export type ParsedVotingdappInstruction<
-  TProgram extends string = 'JAVuBXeBZqXNtS73azhBDAoYaaAFfo4gWXoZe2e7Jf8H',
+  TProgram extends string = 'GuCG6usWLQ5JwCMwyJj5LtAD2uLAtko4vRakmaUKTGky',
 > = {
   instructionType: VotingdappInstruction.Greet;
 } & ParsedGreetInstruction<TProgram>;

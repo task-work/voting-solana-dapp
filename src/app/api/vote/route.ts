@@ -5,11 +5,12 @@ import type { ActionGetResponse, ActionPostRequest } from "@solana/actions";
 import { ACTIONS_CORS_HEADERS, createPostResponse } from "@solana/actions";
 import { Connection, PublicKey, Transaction } from '@solana/web3.js';
 import { BN, Program, AnchorProvider } from '@coral-xyz/anchor';
-import { Voting } from "@/../anchor/target/types/voting";
 import { NextRequest } from "next/server";
-const IDL = require('@/../anchor/target/idl/voting.json');             //本地环境的合约（在本地开发完成）
+import { Voting } from "@/../anchor/target/types/voting";              
+// const IDL = require('@/../anchor/target/idl/voting.json');             //本地环境的合约（在本地开发完成）
 
-// const IDL = require('@/idl/devlepment/voting.json');                      //beta.solpg.io 导出，发布至devnet的合约，通过复制本地环境合约修改
+// import { Voting } from "@/idl/devlepment/voting";
+const IDL = require('@/idl/devlepment/voting.json');                      //beta.solpg.io 导出，发布至devnet的合约，通过复制本地环境合约修改
 
 export const OPTIONS = async (req: NextRequest) => {
   return new Response(null, {
@@ -53,10 +54,10 @@ export async function POST(request: Request) {
         return new Response("Invalid candidate", {status: 400, headers: ACTIONS_CORS_HEADERS});
     }
 
-    const connection = new Connection("http://localhost:8899", "confirmed");
+    // const connection = new Connection("http://localhost:8899", "confirmed");
     // const program: Program<Voting> = new Program(IDL, {connection});
 
-    // const connection = new Connection("https://api.devnet.solana.com", "confirmed");
+    const connection = new Connection("https://api.devnet.solana.com", "confirmed");
     const program: Program<Voting> = new Program(IDL, {connection});
 
     debugger
