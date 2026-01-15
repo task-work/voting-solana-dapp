@@ -1,0 +1,15 @@
+//生产环境的合约文件路径(mainnet)
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "paths": {
+            "@project/anchor": [
+                "anchor/src"
+            ],
+            "@/*": [
+                "./src/*"
+            ],
+            "@program/*": ["src/anchor/production/*"]
+        }
+    }
+}

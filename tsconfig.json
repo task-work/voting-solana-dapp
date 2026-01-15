@@ -32,6 +32,12 @@
       ],
       "@/*": [
         "./src/*"
+      ],
+      //定义智能合约文件的路径，此处需申明路径的存在
+      "@program/*": [
+        "./anchor/target/*",
+        "./src/anchor/test/*",
+        "./src/anchor/production/*"
       ]
     }
   },

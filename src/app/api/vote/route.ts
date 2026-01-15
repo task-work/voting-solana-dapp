@@ -12,8 +12,14 @@ import { connection, programPublicKey } from "@/config/index";
 // import { Voting } from "@/../anchor/target/types/voting";                   
 // const IDL = require('@/../anchor/target/idl/voting.json');             
 
-import { Voting } from "@/anchor/test/types/voting";               //copy from /anchor/target/types
-const IDL = require('@/anchor/test/idl/voting.json');              //copy from /anchor/target/idl
+/**
+ * devnet、testnet、mainnet must copy contract files to ./src/anchor/..
+ * these files come from /anchor/target/types and /anchor/target/idl
+ */
+import { Voting } from "@program/types/voting"; 
+const IDL = require('@program/idl/voting.json');         
+
+console.log("idl", IDL);
 
 export const OPTIONS = async (req: NextRequest) => {
   return new Response(null, {
@@ -49,6 +55,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
     console.log("programId: ", programPublicKey);
+    console.log("rpc url: ", connection.rpcEndpoint);
     try {
         const url = new URL(request.url);
         const candidate = url.searchParams.get("candidate");
