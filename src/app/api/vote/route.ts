@@ -19,8 +19,6 @@ import { connection, programPublicKey } from "@/config/index";
 import { Voting } from "@program/types/voting"; 
 const IDL = require('@program/idl/voting.json');         
 
-console.log("idl", IDL);
-
 export const OPTIONS = async (req: NextRequest) => {
   return new Response(null, {
     status: 204,
@@ -33,6 +31,7 @@ export async function GET(request: Request) {
         icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJWHgdc9FkIl1zWA3g9h7HvChErXQJAuXAIw&s",
         title: "Vote for your favorite type of peanut butter!",
         description: "Vote between crunchy and smooth peanut butter.",
+        cluster: "devnet",
         label: "Vote",
         links: {
             actions: [
@@ -109,7 +108,7 @@ export async function POST(request: Request) {
         const response = await createPostResponse({
             fields: {
                 type: "transaction",
-                transaction: transaction
+                transaction: transaction,
             }
         });
 
