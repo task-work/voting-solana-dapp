@@ -22,7 +22,7 @@ if (!sourceContractDir) {
 console.log("contract dir: ", sourceContractDir);
 
 const targetContractDir = 'src/anchor/run-time';
-copyDir(sourceContractDir, targetContractDir);
+copyDir(sourceContractDir, targetContractDir, ['idl', 'types']);
 
 const nextConfig: NextConfig = {
   allowedDevOrigins: ['10.0.0.128'],
@@ -43,17 +43,29 @@ const nextConfig: NextConfig = {
   // },
 }
 
-function copyDir(src: string, dest: string) {
+function copyDir(src: string, dest: string, allowDirs: (string | RegExp)[] = [], baseSrc: string = src) {
   fs.rmSync(dest, { recursive: true, force: true })
   fs.mkdirSync(dest, { recursive: true })
 
   for (const entry of fs.readdirSync(src, { withFileTypes: true })) {
+
     const srcPath = path.join(src, entry.name)
     const destPath = path.join(dest, entry.name)
 
+    const relPath = path.relative(baseSrc, srcPath).replace(/\\/g, '/')
+
+    const allowed = allowDirs.some(rule =>
+      rule instanceof RegExp
+        ? rule.test(relPath)
+        : relPath === rule || relPath.startsWith(rule + '/')
+    )
+
+    if (!allowed) continue;
+
     if (entry.isDirectory()) {
-      copyDir(srcPath, destPath)
+      copyDir(srcPath, destPath, allowDirs, baseSrc);
     } else {
+      fs.mkdirSync(path.dirname(destPath), { recursive: true })
       fs.copyFileSync(srcPath, destPath)
     }
   }
