@@ -29,11 +29,12 @@ export const OPTIONS = async (req: NextRequest) => {
 };
 
 export async function GET(request: Request) {
-    const actionMetadata: ActionGetResponse = {
+    const actionMetadata = {
         icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJWHgdc9FkIl1zWA3g9h7HvChErXQJAuXAIw&s",
         title: "Vote for your favorite type of peanut butter!",
         description: "Vote between crunchy and smooth peanut butter.",
         label: "Vote",
+        cluster: "devnet",
         links: {
             actions: [
                 {

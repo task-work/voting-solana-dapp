@@ -27,6 +27,8 @@ if (!programDir) {
   throw new Error(`Unknown PROGRAM_ENV: ${programEnv}`);
 }
 
+console.log("programDir", programDir);
+
 const nextConfig: NextConfig = {
   allowedDevOrigins: ['10.0.0.128', 'api.devnet.solana.com'],
   // Environmental variable
