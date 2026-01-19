@@ -19,7 +19,7 @@ import { connection, programPublicKey } from "@/config/index";
 import { Voting } from "@program/types/voting"; 
 const IDL = require('@program/idl/voting.json');         
 
-console.log("idl", IDL);
+console.log("current idl", IDL);
 
 export const OPTIONS = async (req: NextRequest) => {
   return new Response(null, {
@@ -29,12 +29,11 @@ export const OPTIONS = async (req: NextRequest) => {
 };
 
 export async function GET(request: Request) {
-    const actionMetadata = {
+    const actionMetadata: ActionGetResponse = {
         icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJWHgdc9FkIl1zWA3g9h7HvChErXQJAuXAIw&s",
         title: "Vote for your favorite type of peanut butter!",
         description: "Vote between crunchy and smooth peanut butter.",
         label: "Vote",
-        cluster: "devnet",
         links: {
             actions: [
                 {
